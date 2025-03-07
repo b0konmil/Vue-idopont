@@ -1,0 +1,7 @@
+{
+    "appointments": [
+      { "id": 1, "date": "2025-03-10T08:00:00", "booked": true },
+      { "id": 2, "date": "2025-03-10T09:00:00", "booked": false }
+    ]
+}
+  
