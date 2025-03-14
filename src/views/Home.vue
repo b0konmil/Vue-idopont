@@ -9,6 +9,10 @@
       </li>
     </ul>
 
+    <button @click="resetAvailableTimes" class="reset-button">
+      Időpontok visszaállítása
+    </button>
+
     <div v-if="state.selectedTime">
       <h3>Foglalás: {{ state.selectedTime }}</h3>
       <form @submit.prevent="submitBooking">
@@ -44,7 +48,7 @@ export default {
       phone: ''
     });
 
-    const availableTimes = computed(() => {
+    const availableTimes = computed(() => { 
       if (!bookingStore.availableTimes || bookingStore.availableTimes.length === 0) {
         console.log("Nincs elérhető időpont");
       } else {
@@ -78,6 +82,15 @@ export default {
       }
     };
 
+    const resetAvailableTimes = async () => {
+      try{
+        await bookingStore.fetchAvailableTimes();
+        toast.success('Az időpontok sikeresen visszaállítva!')
+      } catch (error) {
+        toast.error('Hiba az időpontok visszaállításakor!')
+      }
+    }
+
     onMounted(async () => {
       try {
         await bookingStore.fetchBookings();
@@ -91,7 +104,8 @@ export default {
       state,
       availableTimes,
       selectTime,
-      submitBooking
+      submitBooking,
+      resetAvailableTimes
     };
   }
 };
