@@ -49,4 +49,23 @@ describe('Home.vue', () => {
 
     expect(wrapper.vm.state.selectedTime).toBe('2025-03-14T08:00:00');
   });
+
+  it('Hibaüzenet megjelenítése, ha nem elérhető időpontot választanak', async () => {
+    const bookingStore = useBookingStore();
+    bookingStore.availableTimes = [
+      '2025-03-14T08:00:00',
+      '2025-03-14T09:00:00',
+    ];
+  
+    const unavailableTime = '2025-03-14T10:00:00';
+    bookingStore.bookedTimes = [unavailableTime];
+
+    const timeButtons = wrapper.findAll('button');
+  
+    await timeButtons[0].trigger('click');
+    await nextTick();
+  
+    const toastMock = require('vue-toastification').useToast();
+    expect(toastMock.error).toHaveBeenCalledWith('Ez az időpont már nem elérhető!');
+  });
 });

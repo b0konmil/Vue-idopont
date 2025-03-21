@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Fodrászat</h1>
     <h2>Válasszon egy szabad időpontot:</h2>
     <ul>
       <li v-for="time in availableTimes" :key="time">
